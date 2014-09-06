@@ -94,10 +94,6 @@ hook.Add("CheckPassword", "CheckPasswordCustom", function( steamID64, ipAddress,
 		params["user_name"] = name or "Undefined"
 		
 		local msg = msgBan
-		for k,v in pairs(params) do
-			msg = string.Replace(msg, "{{ "..k.." }}", v)
-		end
-		return false, msg
 	elseif #svPass > 0 and clPass ~= svPass then
 		local params = {}
 		params["user_pass"] = clPass or ""
@@ -106,10 +102,6 @@ hook.Add("CheckPassword", "CheckPasswordCustom", function( steamID64, ipAddress,
 		params["user_name"] = name or "Undefined"
 		
 		local msg = msgWrongPass
-		for k,v in pairs(params) do
-			msg = string.Replace(msg, "{{ "..k.." }}", v)
-		end
-		return false, msg
 	elseif whitelistEnabled and not table.HasValue(whitelist, steamID) then
 		local params = {}
 		params["user_steamid"] = steamID or "Undefined"
@@ -117,10 +109,11 @@ hook.Add("CheckPassword", "CheckPasswordCustom", function( steamID64, ipAddress,
 		params["user_name"] = name or "Undefined"
 		
 		local msg = msgWhitelist
-		for k,v in pairs(params) do
-			msg = string.Replace(msg, "{{ "..k.." }}", v)
-		end
-		return false, msg
+	else
+		return true
 	end
-	return true
+	for k,v in pairs(params) do
+		msg = string.Replace(msg, "{{ "..k.." }}", v)
+	end
+	return false, msg
 end)
