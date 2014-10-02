@@ -114,8 +114,8 @@ hook.Add("CheckPassword", "CBM_Check", function( steamID64, ipAddress, svPass, c
 		return true
 	end
 	
-	for k,v in pairs(params) do
-		msg = string.Replace(msg, "{{ "..k.." }}", v)
-	end
+	msg = string.gsub(msg, "{{%s([%w_]+)%s}}", function( param )
+		return params[param]
+	end)
 	return false, msg
 end)
