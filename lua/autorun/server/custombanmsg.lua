@@ -48,7 +48,7 @@ CBM.msgWhitelist = [[You're not in the whitelist.]]
 
 
 -- WhiteList Stuff
-CBM.whitelistEnabled = true
+CBM.whitelistEnabled = false
 CBM.whitelist = {
 	"STEAM_0:0:0",
 	"STEAM_0:0:0",
