@@ -68,18 +68,11 @@ local function SecondsFormat(X)
     date.year = date.year - 1970
     return string.format(outPattern, date.year, date.yday, date.hour, date.min, date.sec)
 end
-local function tosteamid(cid)
-  local steam64=tonumber(cid:sub(2))
-  local a = steam64 % 2 == 0 and 0 or 1
-  local b = math.abs(6561197960265728 - steam64 - a) / 2
-  local sid = "STEAM_0:" .. a .. ":" .. (a == 1 and b -1 or b)
-  return sid
-end
 
 -- CheckPassword Hook (the main proccess of this addon)
 hook.Add("CheckPassword", "CBM_Check", function( steamID64, ipAddress, svPass, clPass, name )
 	local msg, params = "", {}
-	local steamID = tosteamid(steamID64)
+	local steamID = util.SteamIDFrom64(steamID64)
 	if ULib and ULib.bans[ steamID ] then -- Check if user is banned by ULX.
 		local banData = ULib.bans[ steamID ]
 		local banDataUnban = tonumber(banData.unban)
